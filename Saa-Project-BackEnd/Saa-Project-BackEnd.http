@@ -1,0 +1,6 @@
+@Saa_Project_BackEnd_HostAddress = http://localhost:5245
+
+GET {{Saa_Project_BackEnd_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
