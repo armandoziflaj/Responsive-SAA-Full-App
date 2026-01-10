@@ -7,5 +7,5 @@ public class CommonData
     [Key]
     public long Id { get; init; }
     public DateTime CreatedOn { get; init; } = DateTime.UtcNow;
-    public DateTime ModifiedOn { get; init; } = DateTime.UtcNow;
+    public DateTime ModifiedOn { get; set; } = DateTime.UtcNow;
 }

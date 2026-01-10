@@ -6,9 +6,11 @@ namespace Saa_Project_BackEnd.Models;
 public class Post : CommonData
 {
     [Required]
+    [MaxLength(50)]
     public required string Title { get; set; }
 
     [Required]
+    [MaxLength(2000)]
     public required string Content { get; set; }
 
     [StringLength(30)]
