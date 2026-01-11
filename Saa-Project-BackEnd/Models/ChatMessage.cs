@@ -20,4 +20,5 @@ public class ChatMessage : CommonData
     public long? GroupId { get; set; }
     [ForeignKey(nameof(GroupId))]
     public virtual Group? Group { get; set; }
+    
 }

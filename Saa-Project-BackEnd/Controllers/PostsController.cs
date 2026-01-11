@@ -97,6 +97,7 @@ namespace Saa_Project_BackEnd.Controllers
                 return NotFound(BaseResponse<PostIdResponse>.Failure(["Post not found"]));
 
             var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            
             if (post.AuthorId != userId)
             {
                 return Forbid();

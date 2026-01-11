@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Saa_Project_BackEnd.Data;
@@ -11,9 +12,11 @@ using Saa_Project_BackEnd.Data;
 namespace Saa_Project_BackEnd.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260111175828_ValidationAndNewColumnInChats")]
+    partial class ValidationAndNewColumnInChats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,6 +182,9 @@ namespace Saa_Project_BackEnd.Migrations
                     b.Property<long?>("ReceiverId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("RelatedId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("SenderId")
                         .HasColumnType("bigint");
 
@@ -274,9 +280,6 @@ namespace Saa_Project_BackEnd.Migrations
 
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("RelatedId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("Type")
                         .IsRequired()
