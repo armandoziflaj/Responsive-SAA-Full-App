@@ -1,0 +1,62 @@
+.loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Το κεντράρει κάθετα στην οθόνη */
+    background-color: #f5f7fb;
+    padding: 1rem;
+}
+
+.formCard {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 400px; /* Για να μην απλώνει πολύ σε μεγάλες οθόνες */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formCard h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+}
+
+.formCard p {
+    color: #666;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: -1rem;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.footer a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.formCard p.errorMessage {
+    color: red;
+    background-color: #ffebee;
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-align: center;
+    border: 1px solid #ffcdd2;
+    margin-bottom: 1rem;
+}

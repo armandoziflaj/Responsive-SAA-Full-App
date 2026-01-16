@@ -1,0 +1,32 @@
+.footer {
+    width: 100%;
+    padding: 2rem 1rem;
+    margin-top: auto; /* Σπρώχνει το footer στο τέλος αν υπάρχει flex container */
+    text-align: center;
+    border-top: 1px solid #eee;
+    background-color: #ffffff;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.links {
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.links a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.links a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.copyright {
+    opacity: 0.8;
+}
