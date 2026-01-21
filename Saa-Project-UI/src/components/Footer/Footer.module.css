@@ -1,12 +1,12 @@
 .footer {
     width: 100%;
-    padding: 2rem 1rem;
-    margin-top: auto; /* Σπρώχνει το footer στο τέλος αν υπάρχει flex container */
+    padding: 1.5rem 1rem;
     text-align: center;
     border-top: 1px solid #eee;
     background-color: #ffffff;
     color: #666;
     font-size: 0.85rem;
+    flex-shrink: 0;
 }
 
 .links {

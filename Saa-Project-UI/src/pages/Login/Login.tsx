@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 1. Εισαγωγή του hook
+import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Inputs.tsx';
 import Button from '../../components/Button/Button.tsx';
 import styles from './Login.module.css';
