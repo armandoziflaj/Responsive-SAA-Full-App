@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using Saa_Project_BackEnd.Data;
 using Saa_Project_BackEnd.Models;
 
@@ -20,7 +21,25 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1",
+        new OpenApiInfo()
+        {
+            Title = "Auth",
+            Version = "V1"
+        });
+    
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme{
+        
+    In = ParameterLocation.Header,
+    Description = "Please enter token",
+    Name = "Authorization",
+    Scheme =  "Bearer",
+    BearerFormat = "JWT",
+    });
+    
+});
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
