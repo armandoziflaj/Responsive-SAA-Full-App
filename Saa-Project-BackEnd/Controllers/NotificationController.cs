@@ -18,7 +18,7 @@ namespace Saa_Project_BackEnd.Controllers
             var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
             var notifications = await context.Notifications
-                .Where(n => n.UserId == userId)
+                .Where(n => n.UserId == userId && !n.IsRead)
                 .OrderByDescending(n => n.CreatedOn)
                 .Select(n => new NotificationResponse
                 {
@@ -27,20 +27,11 @@ namespace Saa_Project_BackEnd.Controllers
                     Type = n.Type,
                     IsRead = n.IsRead,
                     CreatedOn = n.CreatedOn,
+                    RelatedId = n.RelatedId
                 })
                 .ToListAsync();
 
             return Ok(BaseResponse<IEnumerable<NotificationResponse>>.Success(notifications));
-        }
-
-        [HttpGet("unread-count")]
-        public async Task<ActionResult<BaseResponse<int>>> GetUnreadCount()
-        {
-            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var count = await context.Notifications
-                .CountAsync(n => n.UserId == userId && !n.IsRead);
-
-            return Ok(BaseResponse<int>.Success(count));
         }
 
         [HttpPatch("{id}/read")]

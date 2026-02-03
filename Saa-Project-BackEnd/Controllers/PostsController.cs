@@ -37,6 +37,7 @@ namespace Saa_Project_BackEnd.Controllers
                     Title = p.Title,
                     Content = p.Content,
                     Category = p.Category,
+                    AuthorId = p.AuthorId,
                     AuthorName = p.Author.UserName ?? "User",
                     CreatedOn = p.CreatedOn
                 })
@@ -57,6 +58,7 @@ namespace Saa_Project_BackEnd.Controllers
                     Title = p.Title,
                     Content = p.Content,
                     Category = p.Category,
+                    AuthorId = p.AuthorId,
                     AuthorName = p.Author.UserName ?? "User",
                     CreatedOn = p.CreatedOn
                 })
@@ -91,12 +93,12 @@ namespace Saa_Project_BackEnd.Controllers
         [HttpPut]
         public async Task<ActionResult<BaseResponse<PostIdResponse>>> PutPost(UpdatePostRequest request)
         {
+            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            
             var post = await context.Posts.FindAsync(request.Id);
 
             if (post == null)
                 return NotFound(BaseResponse<PostIdResponse>.Failure(["Post not found"]));
-
-            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             
             if (post.AuthorId != userId)
             {
@@ -106,7 +108,6 @@ namespace Saa_Project_BackEnd.Controllers
             post.Title = request.Title;
             post.Content = request.Content;
             post.Category = request.Category; 
-            
             post.ModifiedOn = DateTime.UtcNow;
 
             await context.SaveChangesAsync();
@@ -134,9 +135,9 @@ namespace Saa_Project_BackEnd.Controllers
             return Ok(BaseResponse<PostIdResponse>.Success(response));
         }
 
-        private bool PostExists(long id)
+        /*private bool PostExists(long id)
         {
             return context.Posts.Any(e => e.Id == id);
-        }
+        }*/
     }
 }

@@ -6,6 +6,7 @@ public class PostResponse
     public string Title { get; set; } = null!;
     public string Content { get; set; } = null!;
     public string Category { get; set; } = null!;
+    public long AuthorId { get; set; }
     public string AuthorName { get; set; } = null!;
     public DateTime CreatedOn { get; set; }
 }

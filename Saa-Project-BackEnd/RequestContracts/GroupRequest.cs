@@ -11,4 +11,5 @@ public class GroupPostRequest
 {
     public required string Name { get; set; }
     public string? Description { get; set; }
+    public required List<long> UserIds { get; set; } 
 }

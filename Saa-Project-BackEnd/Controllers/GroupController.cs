@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging;
 using Saa_Project_BackEnd.Data;
 using Saa_Project_BackEnd.Models;
 using Saa_Project_BackEnd.RequestContracts;
@@ -112,7 +113,17 @@ public class GroupController(AppDbContext context) : ControllerBase
         };
         
         newGroup.Members.Add(adminMember);
-        
+        if (request.UserIds.Count != 0)
+        {
+            var otherMembers = request.UserIds.Select(id => new GroupMember
+            {
+                UserId = id,
+                IsAdmin = false,
+                CreatedOn = DateTime.UtcNow
+            }).ToList();
+            newGroup.Members.AddRange(otherMembers);
+        }
+
         context.Groups.Add(newGroup);
         await context.SaveChangesAsync();
     

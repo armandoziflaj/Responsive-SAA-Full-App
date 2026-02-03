@@ -1,6 +1,7 @@
 namespace Saa_Project_BackEnd.RequestContracts;
 
-public class AccountRequest
+public class LoginDto
 {
-    
+    public string Username { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 }

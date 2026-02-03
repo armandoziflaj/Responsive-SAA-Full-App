@@ -31,6 +31,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
                 .WithMany()
                 .HasForeignKey(uc => uc.ContactId)
                 .OnDelete(DeleteBehavior.Restrict);
+            
+            entity.HasKey(uc => new { uc.UserId, uc.ContactId });
         });
 
         builder.Entity<GroupMember>(entity =>

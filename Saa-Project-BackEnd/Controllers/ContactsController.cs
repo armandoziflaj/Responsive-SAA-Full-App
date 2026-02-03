@@ -65,15 +65,21 @@ public class ContactsController(AppDbContext context) : ControllerBase
     public async Task<ActionResult<BaseResponse<IEnumerable<ContactResponse>>>> GetMyContacts()
     {
         var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-
+        
         var contacts = await context.UserContacts
-            .Where(c => c.UserId == currentUserId)
+            .Where(c => c.UserId == currentUserId || c.ContactId == currentUserId)
             .Include(c => c.Contact) 
             .Select(c => new ContactResponse
             {
-                ContactId = c.ContactId,
-                UserName = c.Contact.UserName ?? "Unknown",
-                Interests = c.Contact.Interests ?? "",
+                ContactId = c.UserId == currentUserId ? c.ContactId : c.UserId,
+                UserName = c.UserId == currentUserId 
+                    ? (c.Contact.UserName ?? "Unknown") 
+                    : (c.User.UserName ?? "Unknown"),
+                
+                Interests = c.UserId == currentUserId 
+                    ? (c.Contact.Interests ?? "") 
+                    : (c.User.Interests ?? ""),
+                
                 AddedOn = c.CreatedOn
             })
             .ToListAsync();
