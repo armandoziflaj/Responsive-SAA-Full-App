@@ -1,0 +1,130 @@
+.wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.bellWrapper {
+    position: relative;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #555;
+    transition: color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.bellWrapper:hover {
+    color: #007bff;
+    transform: scale(1.1);
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: #ff4757;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 15px);
+    right: -10px;
+    width: 320px;
+    max-height: 400px;
+    background: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    z-index: 9999;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+}
+
+.clearAllBtn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 5px;
+    transition: color 0.2s;
+}
+
+.clearAllBtn:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.list {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.item {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.item:hover {
+    background-color: #f0f7ff;
+}
+
+.item p {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.4;
+}
+
+.item small {
+    font-size: 0.75rem;
+    color: #999;
+}
+
+.empty {
+    padding: 30px;
+    text-align: center;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.dropdown::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ffffff;
+    filter: drop-shadow(0 -1px 1px rgba(0,0,0,0.05));
+}

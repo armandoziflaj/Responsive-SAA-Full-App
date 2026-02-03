@@ -1,70 +1,97 @@
 .container {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 20px;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: #f8f9fa;
 }
 
 .header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eef0f2;
+}
+
+.titleGroup {
+    grid-column: 2;
     text-align: center;
-    margin-bottom: 50px;
+}
+
+.titleGroup h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.titleGroup p {
+    margin: 8px 0 0 0;
+    color: #7f8c8d;
+    font-size: 1.1rem;
+}
+
+.openAddModalBtn {
+    grid-column: 3;
+    justify-self: end;
+
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+}
+
+.openAddModalBtn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+}
+
+.openAddModalBtn:active {
+    transform: translateY(0);
 }
 
 .postsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 25px;
+}
+
+.spinner {
+    display: flex;
     justify-content: center;
-}
-
-.card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.categoryTag {
-    background: #e0f2fe;
-    color: #0369a1;
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: 600;
-}
-
-.title {
-    font-size: 1.4rem;
-    margin: 15px 0;
-    color: #1a1a1a;
-}
-
-.content {
-    color: #4a4a4a;
-    line-height: 1.6;
-    font-size: 0.95rem;
-    margin-bottom: 20px;
-}
-
-.cardFooter {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #f0f0f0;
-    padding-top: 15px;
+    height: 100vh;
+    font-size: 1.2rem;
+    color: #3498db;
+    font-weight: bold;
 }
 
-.readMore {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    font-weight: 500;
+@media (max-width: 900px) {
+    .header {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .titleGroup {
+        text-align: center;
+    }
+
+    .openAddModalBtn {
+        width: 100%;
+        justify-content: center;
+    }
 }

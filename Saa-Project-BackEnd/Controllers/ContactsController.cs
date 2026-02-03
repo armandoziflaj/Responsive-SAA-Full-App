@@ -41,7 +41,7 @@ public class ContactsController(AppDbContext context) : ControllerBase
         context.UserContacts.Add(newContact);
         await context.SaveChangesAsync();
 
-        return Ok(BaseResponse<string>.Success("Contact has been added succe!"));
+        return Ok(BaseResponse<string>.Success("Contact has been added successfully!"));
     }
 
     [HttpDelete("{contactId}")]
@@ -53,12 +53,12 @@ public class ContactsController(AppDbContext context) : ControllerBase
             .FirstOrDefaultAsync(c => c.UserId == currentUserId && c.ContactId == contactId);
 
         if (contactRecord == null)
-            return NotFound(BaseResponse<string>.Failure(["Η επαφή δεν βρέθηκε στη λίστα σας."]));
+            return NotFound(BaseResponse<string>.Failure(["Contact not found."]));
 
         context.UserContacts.Remove(contactRecord);
         await context.SaveChangesAsync();
 
-        return Ok(BaseResponse<string>.Success("Η επαφή αφαιρέθηκε."));
+        return Ok(BaseResponse<string>.Success("Contact has been deleted successfully."));
     }
 
     [HttpGet]
@@ -68,7 +68,7 @@ public class ContactsController(AppDbContext context) : ControllerBase
 
         var contacts = await context.UserContacts
             .Where(c => c.UserId == currentUserId)
-            .Include(c => c.Contact) // Φέρνουμε τα στοιχεία του χρήστη-επαφή
+            .Include(c => c.Contact) 
             .Select(c => new ContactResponse
             {
                 ContactId = c.ContactId,

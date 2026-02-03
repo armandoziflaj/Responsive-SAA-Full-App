@@ -1,0 +1,125 @@
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.categoryTag {
+    background: #ebf8ff;
+    color: #2b6cb0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+}
+
+.date {
+    font-size: 0.8rem;
+    color: #a0aec0;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 0.75rem;
+}
+
+.content {
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #edf2f7;
+}
+
+.author {
+    font-size: 0.85rem;
+    color: #718096;
+}
+
+.author strong {
+    color: #2d3748;
+}
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #edf2f7;
+}
+
+.addContactBtn, .deleteBtn,.editBtn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.addContactBtn {
+    background-color: #38a169;
+}
+
+.addContactBtn:hover {
+    background-color: #2f855a;
+    transform: scale(1.1);
+}
+
+.deleteBtn {
+    background-color: #e53e3e;
+}
+
+.deleteBtn:hover {
+    background-color: #c53030;
+    transform: scale(1.1);
+}
+.editBtn {
+    background-color: #3873a1;
+}
+
+.editBtn:hover {
+    background-color: #216aa3;
+    transform: scale(1.1);
+}
+.addContactBtn i, .deleteBtn i ,.editBtn i{
+    line-height: 0;
+}

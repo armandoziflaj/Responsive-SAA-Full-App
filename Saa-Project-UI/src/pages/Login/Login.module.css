@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh; /* Το κεντράρει κάθετα στην οθόνη */
+    min-height: 80vh;
     background-color: #f5f7fb;
     padding: 1rem;
 }
@@ -13,7 +13,7 @@
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
     width: 100%;
-    max-width: 400px; /* Για να μην απλώνει πολύ σε μεγάλες οθόνες */
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -33,6 +33,36 @@
     margin-top: -1rem;
 }
 
+.divider {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+.googleButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px;
+    background-color: #ffffff;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.googleButton:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 1px 3px rgba(60,64,67, 0.3);
+}
+
+.googleButton i {
+    font-size: 18px;
+}
 .footer {
     text-align: center;
     margin-top: 1rem;

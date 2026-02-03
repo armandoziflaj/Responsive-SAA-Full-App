@@ -1,0 +1,146 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.25s ease-out;
+}
+
+.modalContent {
+    background: #ffffff;
+    width: 550px;
+    max-width: 95%;
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: slideUp 0.3s ease-out;
+}
+
+.modalContent h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #1a1a1b;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.formGroup {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formGroup label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.modalInput,
+.modalTextarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modalInput:focus,
+.modalTextarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.modalTextarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    gap: 15px;
+}
+
+.saveCancelGroup {
+    display: flex;
+    gap: 12px;
+}
+
+.saveBtn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.saveBtn:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+}
+
+.cancelBtn {
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ddd;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+    background-color: #e2e6ea;
+}
+
+.deleteBtnModal {
+    background-color: #fff1f0;
+    color: #ff4d4f;
+    border: 1px solid #ffccc7;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.deleteBtnModal:hover {
+    background-color: #ff4d4f;
+    color: white;
+    border-color: #ff4d4f;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
