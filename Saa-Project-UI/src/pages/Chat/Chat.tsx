@@ -131,7 +131,7 @@ const Chat = () => {
                     setNewMessage={setNewMessage} onSendMessage={handleSendMessage}
                 />
             ) : (
-                <div className={styles.emptyState}><p>Επιλέξτε μια συνομιλία για να ξεκινήσετε</p></div>
+                <div className={styles.emptyState}><p>Select a chat to start a conversation.</p></div>
             )}
 
             {isGroupModalOpen && (
