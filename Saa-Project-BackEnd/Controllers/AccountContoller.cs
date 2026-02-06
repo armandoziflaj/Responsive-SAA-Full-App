@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Saa_Project_BackEnd.Data;
@@ -11,13 +12,16 @@ namespace Saa_Project_BackEnd.Controllers;
         : ControllerBase
     {
         [HttpGet("GetCurrentUser")]
+        [Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme},Identity.Bearer")]
         public ActionResult<BaseResponse<LoginResponse>> GetCurrentUser()
         {
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                               ?? User.FindFirstValue("sub") 
+                               ?? User.FindFirstValue("id");
 
             if (string.IsNullOrEmpty(userIdString))
             {
-                return Unauthorized(BaseResponse<LoginResponse>.Failure(["User not found in claims"]));
+                return Unauthorized(BaseResponse<LoginResponse>.Failure([$"User not found."]));
             }
     
             var response = new LoginResponse 
