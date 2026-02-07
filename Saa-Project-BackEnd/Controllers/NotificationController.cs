@@ -3,19 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using Saa_Project_BackEnd.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Saa_Project_BackEnd.ResponseContracts;
 
 namespace Saa_Project_BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme},Identity.Bearer")]
     public class NotificationsController(AppDbContext context) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<BaseResponse<IEnumerable<NotificationResponse>>>> GetNotifications()
         {
-            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                    ?? User.FindFirstValue("sub") 
+                                    ?? User.FindFirstValue("id")!);
 
             var notifications = await context.Notifications
                 .Where(n => n.UserId == userId && !n.IsRead)
@@ -37,7 +40,9 @@ namespace Saa_Project_BackEnd.Controllers
         [HttpPatch("{id}/read")]
         public async Task<ActionResult<BaseResponse<bool>>> MarkAsRead(long id)
         {
-            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                    ?? User.FindFirstValue("sub") 
+                                    ?? User.FindFirstValue("id")!);
             
             var notification = await context.Notifications
                 .FirstOrDefaultAsync(n => n.Id == id && n.UserId == userId);
@@ -54,7 +59,9 @@ namespace Saa_Project_BackEnd.Controllers
         [HttpPatch("read-all")]
         public async Task<ActionResult<BaseResponse<bool>>> MarkAllAsRead()
         {
-            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                    ?? User.FindFirstValue("sub") 
+                                    ?? User.FindFirstValue("id")!);
 
             var unreadNotifications = await context.Notifications
                 .Where(n => n.UserId == userId && !n.IsRead)

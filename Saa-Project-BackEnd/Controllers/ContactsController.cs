@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,15 @@ namespace Saa_Project_BackEnd.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme},Identity.Bearer")]
 public class ContactsController(AppDbContext context) : ControllerBase
 {
     [HttpPost("{contactId}")]
     public async Task<ActionResult<BaseResponse<string>>> AddContact(long contactId)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
 
         if (currentUserId == contactId)
             return Ok(BaseResponse<string>.Failure(["You can't add yourself."]));
@@ -47,7 +50,9 @@ public class ContactsController(AppDbContext context) : ControllerBase
     [HttpDelete("{contactId}")]
     public async Task<ActionResult<BaseResponse<string>>> DeleteContact(long contactId)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
 
         var contactRecord = await context.UserContacts
             .FirstOrDefaultAsync(c => c.UserId == currentUserId && c.ContactId == contactId);
@@ -64,7 +69,9 @@ public class ContactsController(AppDbContext context) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<BaseResponse<IEnumerable<ContactResponse>>>> GetMyContacts()
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
         
         var contacts = await context.UserContacts
             .Where(c => c.UserId == currentUserId || c.ContactId == currentUserId)

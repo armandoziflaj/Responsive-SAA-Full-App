@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,15 @@ namespace Saa_Project_BackEnd.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme},Identity.Bearer")]
 public class GroupMembersController(AppDbContext context) : ControllerBase
 {
     [HttpPost]
     public async Task<ActionResult<BaseResponse<GroupMemberResponse>>> AddMember(GroupMemberRequest request)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
 
         if (currentUserId != request.UserId)
         {
@@ -62,7 +65,9 @@ public class GroupMembersController(AppDbContext context) : ControllerBase
     [HttpDelete("{groupId}/{userId}")]
     public async Task<ActionResult<BaseResponse<string>>> DeleteMember(long groupId, long userId)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
 
         var member = await context.GroupMembers
             .FirstOrDefaultAsync(m => m.GroupId == groupId && m.UserId == userId);
@@ -90,7 +95,9 @@ public class GroupMembersController(AppDbContext context) : ControllerBase
     [HttpPut]
     public async Task<ActionResult<BaseResponse<UpdateMemberResponse>>> UpdateMember(UpdateGroupMember request)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
         
         var currentUserMembership = await context.GroupMembers
             .FirstOrDefaultAsync(m => m.GroupId == request.GroupId && m.UserId == currentUserId);
@@ -122,7 +129,9 @@ public class GroupMembersController(AppDbContext context) : ControllerBase
     [HttpGet("{groupId}/{userId}")]
     public async Task<ActionResult<BaseResponse<GetGroupMember>>> GetMember(long groupId, long userId)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
         
         var requesterIsMember = await context.GroupMembers
             .AnyAsync(m => m.GroupId == groupId && m.UserId == currentUserId);
@@ -151,7 +160,9 @@ public class GroupMembersController(AppDbContext context) : ControllerBase
     [HttpGet("{groupId}")]
     public async Task<ActionResult<BaseResponse<IEnumerable<GetGroupMember>>>> GetMembers(long groupId)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
     
         var requesterIsMember = await context.GroupMembers
             .AnyAsync(m => m.GroupId == groupId && m.UserId == currentUserId);

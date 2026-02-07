@@ -4,6 +4,7 @@ using Saa_Project_BackEnd.Data;
 using Saa_Project_BackEnd.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Saa_Project_BackEnd.RequestContracts;
 using Saa_Project_BackEnd.ResponseContracts;
 
@@ -11,7 +12,7 @@ namespace Saa_Project_BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme},Identity.Bearer")]
     public class PostsController(AppDbContext context) : ControllerBase
     {
         
@@ -93,7 +94,9 @@ namespace Saa_Project_BackEnd.Controllers
         [HttpPut]
         public async Task<ActionResult<BaseResponse<PostIdResponse>>> PutPost(UpdatePostRequest request)
         {
-            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                    ?? User.FindFirstValue("sub") 
+                                    ?? User.FindFirstValue("id")!);
             
             var post = await context.Posts.FindAsync(request.Id);
 

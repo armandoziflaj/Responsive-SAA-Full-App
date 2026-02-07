@@ -32,6 +32,4 @@ namespace Saa_Project_BackEnd.Controllers;
 
             return Ok(BaseResponse<LoginResponse>.Success(response));
         }
-
-
     }

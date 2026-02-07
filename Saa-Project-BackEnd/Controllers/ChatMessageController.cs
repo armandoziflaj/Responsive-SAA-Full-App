@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -13,14 +14,17 @@ namespace Saa_Project_BackEnd.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme},Identity.Bearer")]
+
 public class MessagesController(AppDbContext context, IHubContext<ChatHub> hubContext) : ControllerBase
 {
     
 [HttpPost("private")]
 public async Task<ActionResult<BaseResponse<MessageResponse>>> SendPrivateMessage(MessagePrivateRequest request)
 {
-    var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                   ?? User.FindFirstValue("sub") 
+                                   ?? User.FindFirstValue("id")!);
 
     if (currentUserId == request.ReceiverId)
         return BadRequest(BaseResponse<MessageResponse>.Failure(["You cannot send a message to yourself."]));
@@ -73,7 +77,9 @@ public async Task<ActionResult<BaseResponse<MessageResponse>>> SendPrivateMessag
 [HttpPost("group")]
 public async Task<ActionResult<BaseResponse<MessageResponse>>> SendGroupMessage(MessageGroupRequest request)
 {
-    var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                   ?? User.FindFirstValue("sub") 
+                                   ?? User.FindFirstValue("id")!);
 
     var isMember = await context.GroupMembers
         .AnyAsync(m => m.GroupId == request.GroupId && m.UserId == currentUserId);
@@ -140,7 +146,9 @@ public async Task<ActionResult<BaseResponse<MessageResponse>>> SendGroupMessage(
     [HttpGet("private/{otherUserId}")]
     public async Task<ActionResult<BaseResponse<IEnumerable<MessageResponse>>>> GetPrivateMessages(long otherUserId)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
 
         var messages = await context.ChatMessages
             .AsNoTracking()
@@ -163,7 +171,9 @@ public async Task<ActionResult<BaseResponse<MessageResponse>>> SendGroupMessage(
     [HttpGet("group/{groupId}")]
     public async Task<ActionResult<BaseResponse<IEnumerable<MessageResponse>>>> GetGroupMessages(long groupId)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
 
         var isMember = await context.GroupMembers
             .AnyAsync(m => m.GroupId == groupId && m.UserId == currentUserId);

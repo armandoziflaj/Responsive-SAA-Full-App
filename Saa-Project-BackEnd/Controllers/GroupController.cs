@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,14 +13,16 @@ namespace Saa_Project_BackEnd.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme},Identity.Bearer")]
 public class GroupController(AppDbContext context) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<BaseResponse<List<GroupGetResponse>>>>
         GetGroups()
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
 
         var groups = await context.Groups
             .Where(g => g.Members.Any(m => m.UserId == currentUserId))
@@ -43,7 +46,9 @@ public class GroupController(AppDbContext context) : ControllerBase
     public async Task<ActionResult<BaseResponse<GroupGetResponse>>>
         GetGroup(long id)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
 
         var group = await context.Groups
             .Where(g => g.Members.Any(m => m.UserId == currentUserId))
@@ -67,7 +72,9 @@ public class GroupController(AppDbContext context) : ControllerBase
     public async Task<ActionResult<BaseResponse<GroupIdResponse>>>
         UpdateGroup(GroupUpdateRequest request)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
 
         var group = await context.Groups
             .Include(g => g.Members)
@@ -96,7 +103,9 @@ public class GroupController(AppDbContext context) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<BaseResponse<GroupIdResponse>>> SaveGroup(GroupPostRequest request)
     {
-        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var currentUserId = long.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                                       ?? User.FindFirstValue("sub") 
+                                       ?? User.FindFirstValue("id")!);
         
         var newGroup = new Group
         {
