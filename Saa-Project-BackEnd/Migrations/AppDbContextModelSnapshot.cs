@@ -411,11 +411,8 @@ namespace Saa_Project_BackEnd.Migrations
 
             modelBuilder.Entity("Saa_Project_BackEnd.Models.UserContact", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<long>("ContactId")
                         .HasColumnType("bigint");
@@ -423,17 +420,15 @@ namespace Saa_Project_BackEnd.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "ContactId");
 
                     b.HasIndex("ContactId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UserContacts");
                 });
